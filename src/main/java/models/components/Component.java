@@ -47,7 +47,6 @@ public class Component {
         } catch (Exception e) {
             throw new IllegalArgumentException("[ERR] The component must have annotation for: CssSelector, ID...");
         }
-
         List<WebElement> results = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(componentSelector));
 
         // Define component's constructor
@@ -78,7 +77,6 @@ public class Component {
             return By.cssSelector(componentClass.getAnnotation(ComponentCSSSelector.class).value());
         } else if (componentClass.isAnnotationPresent(ComponentIDSelector.class)) {
             return By.id(componentClass.getAnnotation(ComponentIDSelector.class).value());
-
         } else {
             throw new IllegalArgumentException("Component class " + componentClass + " must have annotation!");
 
