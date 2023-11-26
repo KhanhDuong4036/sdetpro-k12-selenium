@@ -1,7 +1,6 @@
 package tests;
 
 import driver.DriverFactory;
-import models.pages.LoginPageModel02;
 import models.pages.LoginPageModel03;
 import org.openqa.selenium.WebDriver;
 

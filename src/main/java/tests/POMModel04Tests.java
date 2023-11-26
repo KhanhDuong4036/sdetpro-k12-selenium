@@ -1,7 +1,6 @@
 package tests;
 
 import driver.DriverFactory;
-import models.pages.BasePage;
 import models.pages.HomePage;
 import org.openqa.selenium.WebDriver;
 
