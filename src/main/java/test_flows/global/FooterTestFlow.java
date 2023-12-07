@@ -1,11 +1,20 @@
 package test_flows.global;
 
+import models.components.global.TopMenuComponent;
+
+import static models.components.global.TopMenuComponent.MainCateItem;
+import static models.components.global.TopMenuComponent.SublistComponent;
+
 import models.components.global.footer.*;
 import models.pages.BasePage;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.security.SecureRandom;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +38,42 @@ public class FooterTestFlow {
         verifyCustomerServiceColumn(customerServiceColumnComponent);
         verifyMyAccountColumn(myAccountColumnComponent);
 //        verifyFollowUsColumn(followUsColumnComponent);
+    }
+
+    public void verifyProductCateFooterComponent() {
+        // Randomly pickup MainItem from TopMenuComponent
+        BasePage basePage = new BasePage(driver);
+        TopMenuComponent topMenuComponent = basePage.topMenuComponent();
+        List<MainCateItem> mainCateEle = topMenuComponent.mainItemsEle();
+        Assert.assertFalse(mainCateEle.isEmpty(), "[ERR] There is no item on top menu");
+        MainCateItem randomMainCateItemEle = mainCateEle.get(new SecureRandom().nextInt(mainCateEle.size()));
+        String randomCateHref = randomMainCateItemEle.cateItemLinkEle().getAttribute("href");
+        randomMainCateItemEle.cateItemLinkEle().click();
+
+        // Get sublist(if any) then click on a random sub-item / MainItem (if has no sublist)
+//        List<SublistComponent> sublistComponents = randomMainCateItemEle.sublistComponents();
+//        if (sublistComponents.isEmpty()) {
+//            randomMainCateItemEle.cateItemLinkEle().click();
+//        } else {
+//            int randomIndex = new SecureRandom().nextInt(sublistComponents.size());
+//            SublistComponent randomCateItemComponent = sublistComponents.get(randomIndex);
+//            randomCateHref = randomCateItemComponent.getComponent().getAttribute("href");
+//            randomCateItemComponent.getComponent().click();
+//
+//        }
+
+        // Make sure we are on the right page | Wait until navigation is done
+        try {
+            WebDriverWait wait = randomMainCateItemEle.componentWait();
+            wait.until(ExpectedConditions.urlContains(randomCateHref));
+
+        } catch (TimeoutException ignored) {
+            Assert.fail("[ERR] Target page is not matched");
+        }
+
+        // Call common verify method
+        verifyFooterComponent();
+
     }
 
     private void verifyInformationColumn(InformationColumnComponent informationColumnComponent) {
