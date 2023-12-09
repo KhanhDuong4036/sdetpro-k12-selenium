@@ -2,10 +2,12 @@ package models.pages;
 
 import models.components.Component;
 
-import models.components.global.TopMenuComponent;
+import models.components.global.CategoryItemComponent;
 import models.components.global.footer.FooterComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import java.util.List;
 
 public class BasePage extends Component {
 
@@ -20,7 +22,7 @@ public class BasePage extends Component {
         return findComponent(FooterComponent.class);
     }
 
-    public TopMenuComponent topMenuComponent(){
-        return findComponent(TopMenuComponent.class);
+    public List<CategoryItemComponent> categoryItemComponents(){
+        return findComponents(CategoryItemComponent.class);
     }
 }
