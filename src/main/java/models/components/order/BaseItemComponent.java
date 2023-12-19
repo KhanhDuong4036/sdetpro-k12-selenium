@@ -26,6 +26,7 @@ public class BaseItemComponent extends Component {
     }
 
     public void clickOnAddToCartBtn(){
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartBtn));
         findElement(addToCartBtn).click();
     }
 
