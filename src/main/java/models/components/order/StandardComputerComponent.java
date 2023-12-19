@@ -34,7 +34,7 @@ public class StandardComputerComponent extends ComputerEssentialComponent{
 
     private String selectOption(WebElement dropdownEle, String type){
         SelectEx select = new SelectEx(dropdownEle);
-        List<WebElement> allOptionsEls = select.getAllSelectedOptions();
+        List<WebElement> allOptionsEls = select.getOptions();
         String fullStrOption = null;
 
         for (WebElement optionEle : allOptionsEls) {
