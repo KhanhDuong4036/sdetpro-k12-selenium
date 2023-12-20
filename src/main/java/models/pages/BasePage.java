@@ -4,7 +4,7 @@ import models.components.Component;
 
 import models.components.global.CategoryItemComponent;
 import models.components.global.footer.FooterComponent;
-import models.components.global.footer.HeaderComponent;
+import models.components.global.header.HeaderComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

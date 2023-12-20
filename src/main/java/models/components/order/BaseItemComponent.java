@@ -14,7 +14,6 @@ public class BaseItemComponent extends Component {
     private static final By productQuantitySel = By.cssSelector(".add-to-cart input[class^='qty-input']");
     private static final By barNotificationSel = By.id("bar-notification");
 
-    private static final By headerAddToCartLinkSel = By.cssSelector("#bar-notification a");
 
     public BaseItemComponent(WebDriver driver, WebElement component) {
         super(driver, component);
@@ -40,9 +39,4 @@ public class BaseItemComponent extends Component {
         wait.until(ExpectedConditions.textToBePresentInElementLocated(barNotificationSel, successMessage));
     }
 
-    public void clickOnShoppingCartLink(){
-        wait.until(ExpectedConditions.elementToBeClickable(headerAddToCartLinkSel));
-        findElement(headerAddToCartLinkSel).click();
-
-    }
 }
