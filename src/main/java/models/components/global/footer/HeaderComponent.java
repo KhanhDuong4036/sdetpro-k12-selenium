@@ -18,7 +18,6 @@ public class HeaderComponent extends Component {
     }
 
     public void clickOnShoppingCartLink(){
-        wait.until(ExpectedConditions.elementToBeClickable(shoppingCartLinkSel));
         findElement(shoppingCartLinkSel).click();
     }
 }
