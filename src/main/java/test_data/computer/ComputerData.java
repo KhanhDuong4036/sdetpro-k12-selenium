@@ -1,4 +1,4 @@
-package test_data;
+package test_data.computer;
 
 public class ComputerData {
 

@@ -1,23 +1,19 @@
 package models.pages;
 
-import models.components.cart.CartItemRowComponent;
-import models.components.cart.TotalComponent;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.util.List;
+public class CheckoutOptionPage extends BasePage{
 
-public class ShoppingCartPage extends BasePage{
+    private static final By checkoutAsGuestBtnSel =By.cssSelector("input[class*='checkout-as-guest-button']");
 
-    public ShoppingCartPage(WebDriver driver) {
+    public CheckoutOptionPage(WebDriver driver) {
         super(driver);
     }
 
-    public List<CartItemRowComponent> cartItemRowComponents(){
-        return findComponents(CartItemRowComponent.class);
-
+    public void checkoutAsGuest(){
+        findElement(checkoutAsGuestBtnSel).click();
     }
 
-    public TotalComponent totalComponent(){
-        return findComponent(TotalComponent.class);
-    }
 }

@@ -1,23 +1,19 @@
 package models.pages;
 
-import models.components.cart.CartItemRowComponent;
-import models.components.cart.TotalComponent;
+import models.components.checkout.BillingAddressComponent;
 import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public class ShoppingCartPage extends BasePage{
+public class CheckoutPage extends BasePage{
 
-    public ShoppingCartPage(WebDriver driver) {
+    public CheckoutPage(WebDriver driver) {
         super(driver);
     }
 
-    public List<CartItemRowComponent> cartItemRowComponents(){
-        return findComponents(CartItemRowComponent.class);
-
+    public BillingAddressComponent billingAddressComponent(){
+        return findComponent(BillingAddressComponent.class);
     }
 
-    public TotalComponent totalComponent(){
-        return findComponent(TotalComponent.class);
-    }
+
 }
