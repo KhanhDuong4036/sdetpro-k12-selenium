@@ -21,7 +21,7 @@ public class PaymentInformationComponent extends Component {
     private static final By cardCodeSel = By.id("CardCode");
     private static final By purchaseOrderNumberSel = By.id("PurchaseOrderNumber");
 
-    private static final By paymentInfoSectionSel = By.cssSelector(".section payment-info");
+    private static final By paymentInfoSectionSel = By.xpath("//div[@class='section payment-info']//tbody//tr//td/p");
     private static final By continueBtnSel = By.cssSelector("input[class*='payment-info-next-step-button']");
 
 

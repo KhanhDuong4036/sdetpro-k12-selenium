@@ -194,19 +194,22 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
 
     }
 
-//    public void verifyCODandCheckMoneyOrderPaymentInfo(){
-//        CheckoutPage checkoutPage = new CheckoutPage(driver);
-//        PaymentInformationComponent paymentInformationComponent = checkoutPage.paymentInformationComponent();
-//        if(this.paymentMethod.equals(PaymentMethod.COD)){
-//            String codText = paymentInformationComponent.getPaymentInfoSectionText();
-//            Assert.assertEquals(codText, "You will pay by COD");
-//
-//        } else if (this.paymentMethod.equals(PaymentMethod.CHECK_MONEY_ORDER)){
-//            String checkMoneyOrderText = paymentInformationComponent.getPaymentInfoSectionText();
-//            Assert.assertTrue(checkMoneyOrderText.contains("Mail Personal or Business Check, Cashier's Check or money order to:"));
-//            System.out.println(checkMoneyOrderText);
-//        }
-//    }
+    public void verifyCODandCheckMoneyOrderPaymentInfo(){
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        PaymentInformationComponent paymentInformationComponent = checkoutPage.paymentInformationComponent();
+        if(this.paymentMethod.equals(PaymentMethod.COD)){
+            String codText = paymentInformationComponent.getPaymentInfoSectionText();
+            Assert.assertEquals(codText, "You will pay by COD");
+            System.out.println(codText);
+
+        } else if (this.paymentMethod.equals(PaymentMethod.CHECK_MONEY_ORDER)){
+            String checkMoneyOrderText = paymentInformationComponent.getPaymentInfoSectionText();
+            Assert.assertTrue(checkMoneyOrderText.contains("Mail Personal or Business Check, Cashier's Check or money order to:"));
+            System.out.println(checkMoneyOrderText);
+        }
+        paymentInformationComponent.clickContinueBtn();
+
+    }
 
     public void inputPaymentInfo(CreditCardType creditCardType){
         this.creditCardType = creditCardType;
