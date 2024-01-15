@@ -1,5 +1,6 @@
 package models.components.order;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,37 +13,46 @@ public abstract class ComputerEssentialComponent extends BaseItemComponent {
         super(driver, component);
     }
 
+
     public abstract String selectProcessorType(String type);
+
     public abstract String selectRAMType(String type);
 
-    public String selectHDD(String type){
+    @Step("Select HDD type: {type}")
+    public String selectHDD(String type) {
         return selectComputerOption(type);
     }
-    public String selectOS(String type){
+
+    @Step("Select OS type: {type}")
+    public String selectOS(String type) {
         return selectComputerOption(type);
     }
-    public String selectSoftware(String type){
+
+    @Step("Select Software Type: {type}")
+    public String selectSoftware(String type) {
         unselectDefaultOptions();
         return selectComputerOption(type);
     }
 
-    public void unselectDefaultOptions(){
+    @Step("Unselecting all default options")
+    public void unselectDefaultOptions() {
         component.findElements(allOptionsSel).forEach(option -> {
-            if (option.getAttribute("checked") != null){
+            if (option.getAttribute("checked") != null) {
                 option.click();
             }
         });
     }
 
-    protected String selectComputerOption(String type){
-        String selectorStr = "//label[contains(text()," + "\"" +type + "\"" +")]";
+    protected String selectComputerOption(String type) {
+        String selectorStr = "//label[contains(text()," + "\"" + type + "\"" + ")]";
         By optionSelector = By.xpath(selectorStr);
         WebElement optionEle = null;
         try {
             optionEle = component.findElement(optionSelector);
 
-        }catch (Exception ignored){}
-        if (optionEle == null){
+        } catch (Exception ignored) {
+        }
+        if (optionEle == null) {
             throw new RuntimeException("[ERR] The option " + type + " is not existing to select!");
         }
         optionEle.click();

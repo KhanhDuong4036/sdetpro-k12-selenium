@@ -39,6 +39,7 @@ public class FooterTestFlow {
 
     public void verifyProductCateFooterComponent() {
         // Randomly pickup MainItem from TopMenuComponent
+        Assert.fail("I Like it");
         BasePage basePage = new BasePage(driver);
         List<CategoryItemComponent> categoryItemComponents = basePage.categoryItemComponents();
         Assert.assertFalse(categoryItemComponents.isEmpty(), "[ERR] There is no category item on the top menu");

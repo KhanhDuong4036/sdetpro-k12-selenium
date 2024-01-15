@@ -194,15 +194,15 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
 
     }
 
-    public void verifyCODandCheckMoneyOrderPaymentInfo(){
+    public void verifyCODandCheckMoneyOrderPaymentInfo() {
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         PaymentInformationComponent paymentInformationComponent = checkoutPage.paymentInformationComponent();
-        if(this.paymentMethod.equals(PaymentMethod.COD)){
+        if (this.paymentMethod.equals(PaymentMethod.COD)) {
             String codText = paymentInformationComponent.getPaymentInfoSectionText();
             Assert.assertEquals(codText, "You will pay by COD");
             System.out.println(codText);
 
-        } else if (this.paymentMethod.equals(PaymentMethod.CHECK_MONEY_ORDER)){
+        } else if (this.paymentMethod.equals(PaymentMethod.CHECK_MONEY_ORDER)) {
             String checkMoneyOrderText = paymentInformationComponent.getPaymentInfoSectionText();
             Assert.assertTrue(checkMoneyOrderText.contains("Mail Personal or Business Check, Cashier's Check or money order to:"));
             System.out.println(checkMoneyOrderText);
@@ -211,13 +211,13 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
 
     }
 
-    public void inputPaymentInfo(CreditCardType creditCardType){
+    public void inputPaymentInfo(CreditCardType creditCardType) {
         this.creditCardType = creditCardType;
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         PaymentInformationComponent paymentInformationComponent = checkoutPage.paymentInformationComponent();
-        if (this.paymentMethod.equals(PaymentMethod.PURCHASE_ORDER)){
+        if (this.paymentMethod.equals(PaymentMethod.PURCHASE_ORDER)) {
             paymentInformationComponent.inputPurchaseNumber("123");
-        } else if (this.paymentMethod.equals(PaymentMethod.CREDIT_CARD)){
+        } else if (this.paymentMethod.equals(PaymentMethod.CREDIT_CARD)) {
             paymentInformationComponent.selectCardType(creditCardType);
             String cardHolderFirstName = this.defaultCheckoutUser.getFirstName();
             String cardHolderLastName = this.defaultCheckoutUser.getLastName();
@@ -227,25 +227,18 @@ public class OrderComputerFlow<T extends ComputerEssentialComponent> {
 
             // Current month and next year
             Calendar calendar = new GregorianCalendar();
-//            paymentInformationComponent.inputExpiredMonth(String.valueOf(calendar.get(Calendar.MONTH) + 1));
-            paymentInformationComponent.inputExpiredMonth("11");
-//            paymentInformationComponent.inputExpiredYear(String.valueOf(calendar.get(Calendar.YEAR) + 1));
-            paymentInformationComponent.inputExpiredYear("2025");
+            int expiredMonthNum  = calendar.get(Calendar.MONTH) + 1;
+            String expiredMonthStr = expiredMonthNum < 10 ? "0" + expiredMonthNum : String.valueOf(expiredMonthNum);
+            paymentInformationComponent.inputExpiredMonth(expiredMonthStr);
+//            paymentInformationComponent.inputExpiredMonth("11");
+            paymentInformationComponent.inputExpiredYear(String.valueOf(calendar.get(Calendar.YEAR) + 1));
+//            paymentInformationComponent.inputExpiredYear("2025");
             paymentInformationComponent.inputCardCode("123");
             paymentInformationComponent.clickContinueBtn();
-        } else if(this.paymentMethod.equals(PaymentMethod.COD)){
-//            String codText = paymentInformationComponent.getPaymentInfoSectionText();
-//            Assert.assertEquals(codText, "You will pay by COD");
-//            System.out.println(codText);
-        } else {
-//            // Verify the text is "Mail Personal or Business Check, Cashier's Check or money order to:"
-//            String checkMoneyOrderText = paymentInformationComponent.getPaymentInfoSectionText();
-//            Assert.assertTrue(checkMoneyOrderText.contains("Mail Personal or Business Check, Cashier's Check or money order to:"));
-//            System.out.println(checkMoneyOrderText);
         }
     }
 
-    public void confirmOrder(){
+    public void confirmOrder() {
         new CheckoutPage(driver).confirmOrderComponent().clickOnConfirmOrderBtn();
     }
 
