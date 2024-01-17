@@ -82,6 +82,7 @@ public class PaymentInformationComponent extends Component {
 
     public void clickContinueBtn() {
         findElement(continueBtnSel).click();
+        wait.until(ExpectedConditions.invisibilityOf(findElement(continueBtnSel)));
     }
 
 

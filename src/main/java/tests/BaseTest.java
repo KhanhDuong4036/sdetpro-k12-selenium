@@ -18,23 +18,29 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class BaseTest {
 
-    protected static WebDriver driver;
+    private static final List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<>());
+    private static ThreadLocal<DriverFactory> driverThread;
+
+    protected WebDriver getDriver(){
+        return driverThread.get().getDriver();
+    }
 
     @BeforeTest
     protected void initBrowserSession() {
-        driver = DriverFactory.getWebDriver();
+        driverThread = ThreadLocal.withInitial(() -> {
+            DriverFactory threadDriverFactory = new DriverFactory();
+            webDriverThreadPool.add(threadDriverFactory);
+            return threadDriverFactory;
+        });
     }
 
     @AfterTest(alwaysRun = true)
     public void closeBrowserSession() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driverThread.get().closeBrowserSession();
     }
 
     @AfterMethod
@@ -55,6 +61,7 @@ public class BaseTest {
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
         String fileName = methodName + "-" + year + "-" + month + "-" + date + "-" + hour + "-" + minute + "-" + second + ".png";
+        WebDriver driver = driverThread.get().getDriver();
         File screenshotBase64Data = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             String fileLocation = System.getProperty("user.dir") + "/screenshots/" + fileName;
