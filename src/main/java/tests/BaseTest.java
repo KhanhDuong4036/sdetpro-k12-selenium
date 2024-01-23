@@ -11,6 +11,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,13 +25,16 @@ public class BaseTest {
 
     private static final List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<>());
     private static ThreadLocal<DriverFactory> driverThread;
+    private String browser;
 
     protected WebDriver getDriver(){
-        return driverThread.get().getDriver();
+        return driverThread.get().getDriver(this.browser);
     }
 
-    @BeforeTest
-    protected void initBrowserSession() {
+    @BeforeTest(description = "Init browser session")
+    @Parameters({"browser"})
+    protected void initBrowserSession(String browser) {
+        this.browser = browser;
         driverThread = ThreadLocal.withInitial(() -> {
             DriverFactory threadDriverFactory = new DriverFactory();
             webDriverThreadPool.add(threadDriverFactory);
@@ -61,7 +65,7 @@ public class BaseTest {
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
         String fileName = methodName + "-" + year + "-" + month + "-" + date + "-" + hour + "-" + minute + "-" + second + ".png";
-        WebDriver driver = driverThread.get().getDriver();
+        WebDriver driver = driverThread.get().getDriver(this.browser);
         File screenshotBase64Data = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         try {
             String fileLocation = System.getProperty("user.dir") + "/screenshots/" + fileName;

@@ -2,11 +2,13 @@
 
 <suite name="Regression" parallel="tests" thread-count="10">
     <test name="Footer" parallel="tests" thread-count="10">
+        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="tests.global.footer.FooterTest"/>
         </classes>
     </test>
     <test name="Computer Order" parallel="tests" thread-count="10">
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="tests.order.computer.BuyingCheapComputerTest"/>
             <class name="tests.order.computer.BuyingStandardComputerTest"/>
